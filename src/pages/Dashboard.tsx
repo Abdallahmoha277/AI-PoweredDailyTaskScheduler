@@ -1,0 +1,270 @@
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { supabase } from '../lib/supabase';
+import { 
+  Calendar, CheckCircle2, Circle, Clock, LayoutDashboard, 
+  MessageSquare, Plus, Settings, Sparkles, Send, Zap, LogOut 
+} from 'lucide-react';
+
+type Task = {
+  id: string;
+  title: string;
+  duration?: string;
+  time?: string;
+  status: 'pending' | 'in_progress' | 'done';
+  priority: 'low' | 'medium' | 'high';
+};
+
+export default function Dashboard() {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [aiInput, setAiInput] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserAndTasks = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        navigate('/auth');
+        return;
+      }
+      setUser(user);
+
+      // Fetch user's tasks
+      const { data: tasksData, error } = await supabase
+        .from('tasks')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+        
+      if (!error && tasksData) {
+        // Map backend schema to UI schema for now
+        const mappedTasks = tasksData.map(t => ({
+          id: t.id,
+          title: t.title,
+          duration: t.estimated_duration || '30m',
+          time: t.due_date ? new Date(t.due_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Unscheduled',
+          status: t.status,
+          priority: t.priority
+        }));
+        setTasks(mappedTasks);
+      }
+      setLoading(false);
+    };
+
+    fetchUserAndTasks();
+  }, [navigate]);
+
+  const toggleTask = async (id: string, currentStatus: string) => {
+    const newStatus = currentStatus === 'done' ? 'pending' : 'done';
+    
+    // Update local state immediately for fast UI
+    setTasks(tasks.map(t => 
+      t.id === id ? { ...t, status: newStatus } : t
+    ));
+
+    // Persist to Supabase
+    if (user) {
+      await supabase
+        .from('tasks')
+        .update({ status: newStatus })
+        .eq('id', id)
+        .eq('user_id', user.id);
+    }
+  };
+
+  const handleAiSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!aiInput.trim() || !user) return;
+    
+    const taskTitle = aiInput;
+    setAiInput('');
+
+    // Insert into Supabase
+    const { data: newTaskData, error } = await supabase
+      .from('tasks')
+      .insert([
+        { 
+          user_id: user.id, 
+          title: taskTitle,
+          status: 'pending',
+          priority: 'medium',
+          estimated_duration: '30m' // Default placeholder
+        }
+      ])
+      .select()
+      .single();
+
+    if (!error && newTaskData) {
+      const uiTask: Task = {
+        id: newTaskData.id,
+        title: newTaskData.title,
+        duration: newTaskData.estimated_duration || '30m',
+        time: 'Unscheduled',
+        status: newTaskData.status,
+        priority: newTaskData.priority
+      };
+      setTasks([uiTask, ...tasks]);
+    }
+  };
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate('/');
+  };
+
+  if (loading) {
+    return <div className="min-h-screen bg-background text-foreground flex items-center justify-center">Loading...</div>;
+  }
+
+  return (
+    <div className="min-h-screen bg-background text-foreground flex">
+      {/* Sidebar */}
+      <aside className="w-64 border-r border-border/50 bg-card/50 hidden md:flex flex-col">
+        <div className="h-16 flex items-center px-6 border-b border-border/50 gap-2 font-bold text-xl">
+          <Zap className="w-5 h-5 text-primary" />
+          <span>TaskFlow</span>
+        </div>
+        
+        <nav className="p-4 space-y-2 flex-1">
+          <NavItem icon={LayoutDashboard} label="Dashboard" active />
+          <NavItem icon={Calendar} label="Calendar" />
+          <NavItem icon={MessageSquare} label="AI Assistant" />
+          <NavItem icon={Settings} label="Settings" />
+        </nav>
+
+        <div className="p-4 border-t border-border/50">
+          <button onClick={handleSignOut} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg font-medium text-muted-foreground hover:text-red-400 hover:bg-red-400/10 transition-colors">
+            <LogOut className="w-5 h-5" />
+            Sign Out
+          </button>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 flex flex-col h-screen overflow-hidden">
+        {/* Header */}
+        <header className="h-16 border-b border-border/50 bg-background/80 backdrop-blur flex items-center justify-between px-6 shrink-0">
+          <h1 className="text-xl font-semibold">Today's Schedule</h1>
+          
+          <div className="flex items-center gap-4">
+            <button className="bg-secondary text-secondary-foreground hover:bg-secondary/80 px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors">
+              <Sparkles className="w-4 h-4" />
+              Generate My Day
+            </button>
+            <div className="w-9 h-9 rounded-full bg-accent/20 border border-accent/30 flex items-center justify-center text-accent font-bold">
+              {user?.email?.charAt(0).toUpperCase() || 'U'}
+            </div>
+          </div>
+        </header>
+
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto p-6 flex gap-6 flex-col lg:flex-row">
+          
+          {/* Timeline View */}
+          <div className="flex-1 space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-medium text-muted-foreground">Timeline</h2>
+              <span className="text-sm bg-border/50 px-3 py-1 rounded-full text-muted-foreground">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric'})}</span>
+            </div>
+            
+            <div className="space-y-4">
+              <AnimatePresence>
+                {tasks.length === 0 ? (
+                  <div className="p-8 text-center border border-dashed border-border rounded-xl text-muted-foreground">
+                    No tasks yet. Use the AI Assistant to schedule your day!
+                  </div>
+                ) : (
+                  tasks.map(task => (
+                    <motion.div 
+                      key={task.id}
+                      layout
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      className={`flex items-start gap-4 p-4 rounded-xl border transition-colors ${
+                        task.status === 'done' 
+                          ? 'bg-card/30 border-border/30 opacity-60' 
+                          : 'bg-card border-border hover:border-primary/30 shadow-sm'
+                      }`}
+                    >
+                      <div className="flex-shrink-0 pt-1 flex flex-col items-center gap-1 w-16 text-center">
+                        <span className="text-xs font-semibold text-muted-foreground">{task.time}</span>
+                        <span className="text-[10px] text-muted-foreground/70">{task.duration}</span>
+                      </div>
+
+                      <div className="h-full w-px bg-border mx-2 relative mt-2">
+                        <div className={`absolute -left-[5px] -top-1 w-3 h-3 rounded-full border-2 bg-background ${
+                          task.status === 'done' ? 'border-primary' : 'border-border'
+                        }`} />
+                      </div>
+
+                      <div className="flex-1 flex items-start justify-between">
+                        <div>
+                          <h3 className={`font-medium ${task.status === 'done' ? 'line-through text-muted-foreground' : 'text-foreground'}`}>
+                            {task.title}
+                          </h3>
+                          {task.priority === 'high' && (
+                            <span className="inline-block mt-2 text-[10px] uppercase font-bold text-red-400 bg-red-400/10 px-2 py-0.5 rounded-sm">High Priority</span>
+                          )}
+                        </div>
+                        <button 
+                          onClick={() => toggleTask(task.id, task.status)}
+                          className="text-muted-foreground hover:text-primary transition-colors focus:outline-none"
+                        >
+                          {task.status === 'done' ? (
+                            <CheckCircle2 className="w-6 h-6 text-primary" />
+                          ) : (
+                            <Circle className="w-6 h-6" />
+                          )}
+                        </button>
+                      </div>
+                    </motion.div>
+                  ))
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+
+          {/* AI Input & Kanban Sidebar */}
+          <div className="w-full lg:w-[400px] shrink-0 space-y-6">
+            <div className="bg-gradient-to-b from-card to-background border border-border/50 rounded-2xl p-5 shadow-lg relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-3xl rounded-full" />
+              <h2 className="text-sm font-semibold text-primary flex items-center gap-2 mb-4">
+                <Bot className="w-4 h-4" /> AI Assistant
+              </h2>
+              <form onSubmit={handleAiSubmit} className="relative">
+                <input 
+                  type="text" 
+                  value={aiInput}
+                  onChange={(e) => setAiInput(e.target.value)}
+                  placeholder="e.g. Add a sync with dev team..."
+                  className="w-full bg-background/50 border border-border focus:border-primary/50 focus:ring-1 focus:ring-primary/50 rounded-xl py-3 pl-4 pr-12 text-sm transition-all text-foreground placeholder:text-muted-foreground"
+                />
+                <button 
+                  type="submit"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+                >
+                  <Send className="w-4 h-4" />
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+function NavItem({ icon: Icon, label, active = false }: { icon: any, label: string, active?: boolean }) {
+  return (
+    <a href="#" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg font-medium transition-colors ${
+      active ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-card'
+    }`}>
+      <Icon className="w-5 h-5" />
+      {label}
+    </a>
+  );
+}

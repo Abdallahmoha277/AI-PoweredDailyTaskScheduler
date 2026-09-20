@@ -1,0 +1,10 @@
+{
+  "description": "Optimize your daily schedule effortlessly with an AI-powered planner that prioritizes tasks, manages time, and enhances productivity for busy individuals.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
