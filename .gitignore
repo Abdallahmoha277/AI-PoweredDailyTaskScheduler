@@ -19,3 +19,8 @@ logs/
 # beside it.
 /.plugins/
 /.opencode-skills/
+
+# Capacitor / Native
+/android/
+/ios/
+.capacitor/

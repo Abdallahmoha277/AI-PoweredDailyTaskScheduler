@@ -11,6 +11,7 @@ export type Language = 'en' | 'ar'
 
 const translations = {
   en: {
+    // ============ Task Modal ============
     modalAddTitle: 'Add New Task',
     taskTitleLabel: 'Task Title *',
     taskTitlePlaceholder: 'What do you want to accomplish?',
@@ -27,6 +28,8 @@ const translations = {
     savingTask: 'Saving...',
     addSuccess: 'Task added successfully',
     addError: 'Error adding task',
+
+    // ============ Landing ============
     navLogin: 'Log in',
     navGetStarted: 'Get Started',
     heroBadge: 'Meet your new AI assistant',
@@ -44,6 +47,8 @@ const translations = {
     feature3Title: 'Auto-Scheduling',
     feature3Desc:
       "Click 'Generate My Day' to build an optimized timeline with perfect focus blocks.",
+
+    // ============ Auth ============
     welcomeBack: 'Welcome back',
     createAccount: 'Create an account',
     signInIntro: 'Enter your details to sign in.',
@@ -58,11 +63,15 @@ const translations = {
     hasAccount: 'Already have an account? ',
     signUpLink: 'Sign up',
     signInLink: 'Sign in',
+
+    // ============ Layout / Sidebar ============
     sidebarDashboard: 'Dashboard',
     sidebarCalendar: 'Calendar',
     sidebarAssistant: 'AI Assistant',
     sidebarSettings: 'Settings',
     signOut: 'Sign Out',
+
+    // ============ Dashboard ============
     todaysSchedule: "Today's Schedule",
     generateMyDay: 'Generate My Day',
     timeline: 'Timeline',
@@ -71,14 +80,100 @@ const translations = {
     aiAssistant: 'AI Assistant',
     aiPlaceholder: 'Tell the AI what you need to do...',
     send: 'Send',
+
+    // ============ Language / Branding ============
     languageLabel: 'Language',
     english: 'English',
     arabic: 'العربية',
     appTitle: 'TaskFlow AI',
     landingProduct: 'TaskFlow AI',
     backToHome: 'Back to home',
+
+    // ============ Calendar ============
+    calendarTitle: 'Calendar',
+    scheduledTasks: 'Scheduled Tasks',
+    unscheduledTasks: 'Unscheduled',
+    emptyCalendar: 'No scheduled tasks yet. Add a due date to a task to see it here.',
+    loadingTasks: 'Loading tasks...',
+
+    // ============ Task Delete ============
+    deleteTask: 'Delete',
+    confirmDelete: 'Delete this task?',
+    deleteError: 'Failed to delete task',
+
+    // ============ Assistant ============
+    assistantTitle: 'AI Assistant',
+    assistantSubtitle: 'Tell me what you need to do, I will organize it for you.',
+    assistantInputPlaceholder: 'Type a task or a message...',
+    assistantThinking: 'Thinking',
+    assistantEmpty: 'Start a conversation. Try one of the suggestions below.',
+    assistantClear: 'Clear chat',
+    assistantSuggestions: 'Try these',
+    assistantSuccess: 'Task added successfully',
+    assistantError: 'Something went wrong',
+    suggestion1: 'Meeting with team tomorrow at 10am',
+    suggestion2: 'Urgent: review report for 1 hour',
+    suggestion3: 'Lunch break 30 minutes',
+
+    // ============ Settings ============
+    settingsTitle: 'Settings',
+    settingsAccount: 'Account',
+    settingsAccountDesc: 'Your account information',
+    settingsEmail: 'Email',
+    settingsMemberSince: 'Member since',
+    settingsUserId: 'User ID',
+    settingsPreferences: 'Preferences',
+    settingsPreferencesDesc: 'Customize your experience',
+    settingsLanguage: 'Language',
+    settingsLanguageDesc: 'Choose your preferred language',
+    settingsNotifications: 'Notifications',
+    settingsNotificationsDesc: 'Receive reminders for upcoming tasks',
+    settingsDangerZone: 'Danger Zone',
+    settingsDangerZoneDesc: 'Irreversible actions',
+    settingsSignOut: 'Sign out of your account',
+    settingsDeleteAccount: 'Delete Account',
+    settingsDeleteAccountDesc: 'Permanently delete your account and all data',
+    settingsAbout: 'About',
+    settingsVersion: 'Version',
+    settingsSourceCode: 'Source Code',
+    settingsEnabled: 'Enabled',
+    settingsDisabled: 'Disabled',
+    settingsChangeAvatar: 'Change photo',
+    settingsRemoveAvatar: 'Remove photo',
+    settingsUploading: 'Uploading...',
+    settingsAvatarError: 'Failed to upload photo',
+    settingsAvatarSuccess: 'Photo updated',
+    settingsAvatarTooLarge: 'Photo is too large (max 2MB)',
+    settingsDeleteAccountConfirmTitle: 'Delete your account?',
+    settingsDeleteAccountConfirmBody:
+      'This will permanently delete your account, all your tasks, and all associated data. This action cannot be undone.',
+    settingsDeleteAccountConfirmButton: 'Yes, delete my account',
+    settingsDeleteAccountCancel: 'Cancel',
+    settingsDeleting: 'Deleting...',
+    settingsDeleteError: 'Failed to delete account',
+    settingsDeleteSuccess: 'Account deleted. Redirecting...',
+
+    // ============ Task Detail Modal ============
+    taskDetailHint: 'Tap any field to edit',
+    taskDeleteModalTitle: 'Delete this task?',
+    taskDeleteModalBody:
+      'This action cannot be undone. The task will be permanently removed.',
+    taskDeleteModalConfirm: 'Delete',
+    taskDeleteModalCancel: 'Cancel',
+    taskSaved: 'Saved',
+    taskStatusPending: 'Pending',
+    taskStatusInProgress: 'In progress',
+    taskStatusDone: 'Done',
+    taskNoDate: 'No date',
+    taskNoDuration: 'No duration',
+    taskStatusLabel: 'Status',
+    taskPriorityLabel: 'Priority',
+    taskDurationLabel: 'Duration',
+    taskDueDateLabel: 'Due date',
+    taskDescriptionPlaceholder: 'Add a description...',
   },
   ar: {
+    // ============ Task Modal ============
     modalAddTitle: 'إضافة مهمة جديدة',
     taskTitleLabel: 'عنوان المهمة *',
     taskTitlePlaceholder: 'ما الذي تود إنجازه؟',
@@ -95,6 +190,8 @@ const translations = {
     savingTask: 'جاري الحفظ...',
     addSuccess: 'تمت إضافة المهمة بنجاح',
     addError: 'حدث خطأ أثناء إضافة المهمة',
+
+    // ============ Landing ============
     navLogin: 'تسجيل الدخول',
     navGetStarted: 'ابدأ الآن',
     heroBadge: 'قابل مساعدك الذكي الجديد',
@@ -108,10 +205,12 @@ const translations = {
       'اكتب "غداء في الواحدة بعد الظهر لمدة ساعة" وشاهد ظهوره على جدولك فورًا.',
     feature2Title: 'أولوية ذكية',
     feature2Desc:
-      'يقوم الذكاء الاصطناعي بترتيب المهام تلقائيًا حسب درجة urgency باستخدام مصفوفة إيزنهاور.',
+      'يقوم الذكاء الاصطناعي بترتيب المهام تلقائيًا حسب درجة الأهمية باستخدام مصفوفة إيزنهاور.',
     feature3Title: 'جدولة تلقائية',
     feature3Desc:
-      "اضغط على 'إنشاء يومي' لبناء جدول مُحسَّن مع فترات تركيز مثالية.",
+      "اضغط على 'إنشاء يومي' لبناء جدول مُحسَّن مع فترات تركيز مثالية.",
+
+    // ============ Auth ============
     welcomeBack: 'مرحبًا بعودتك',
     createAccount: 'إنشاء حساب',
     signInIntro: 'أدخل بياناتك لتسجيل الدخول.',
@@ -126,11 +225,15 @@ const translations = {
     hasAccount: 'هل لديك حساب؟ ',
     signUpLink: 'إنشاء حساب',
     signInLink: 'تسجيل الدخول',
+
+    // ============ Layout / Sidebar ============
     sidebarDashboard: 'لوحة التحكم',
     sidebarCalendar: 'التقويم',
     sidebarAssistant: 'المساعد الذكي',
     sidebarSettings: 'الإعدادات',
     signOut: 'تسجيل الخروج',
+
+    // ============ Dashboard ============
     todaysSchedule: 'جدول اليوم',
     generateMyDay: 'إنشاء يومي',
     timeline: 'الجدول الزمني',
@@ -139,12 +242,98 @@ const translations = {
     aiAssistant: 'المساعد الذكي',
     aiPlaceholder: 'أخبر الذكاء الاصطناعي بما تريد إنجازه...',
     send: 'إرسال',
+
+    // ============ Language / Branding ============
     languageLabel: 'اللغة',
     english: 'English',
     arabic: 'العربية',
     appTitle: 'TaskFlow AI',
     landingProduct: 'TaskFlow AI',
     backToHome: 'العودة إلى الرئيسية',
+
+    // ============ Calendar ============
+    calendarTitle: 'التقويم',
+    scheduledTasks: 'المهام المجدولة',
+    unscheduledTasks: 'غير مجدولة',
+    emptyCalendar:
+      'لا توجد مهام مجدولة بعد. أضف تاريخ استحقاق لمهمة لتظهر هنا.',
+    loadingTasks: 'جارٍ تحميل المهام...',
+
+    // ============ Task Delete ============
+    deleteTask: 'حذف',
+    confirmDelete: 'هل تريد حذف هذه المهمة؟',
+    deleteError: 'فشل حذف المهمة',
+
+    // ============ Assistant ============
+    assistantTitle: 'المساعد الذكي',
+    assistantSubtitle: 'أخبرني بما تحتاج إنجازه، وسأنظمه لك.',
+    assistantInputPlaceholder: 'اكتب مهمة أو رسالة...',
+    assistantThinking: 'يفكر',
+    assistantEmpty: 'ابدأ محادثة. جرّب أحد الاقتراحات أدناه.',
+    assistantClear: 'مسح المحادثة',
+    assistantSuggestions: 'جرّب هذه',
+    assistantSuccess: 'تمت إضافة المهمة بنجاح',
+    assistantError: 'حدث خطأ ما',
+    suggestion1: 'اجتماع مع الفريق غداً الساعة 10 صباحاً',
+    suggestion2: 'عاجل: مراجعة التقرير لمدة ساعة',
+    suggestion3: 'استراحة غداء لمدة 30 دقيقة',
+
+    // ============ Settings ============
+    settingsTitle: 'الإعدادات',
+    settingsAccount: 'الحساب',
+    settingsAccountDesc: 'معلومات حسابك',
+    settingsEmail: 'البريد الإلكتروني',
+    settingsMemberSince: 'عضو منذ',
+    settingsUserId: 'معرّف المستخدم',
+    settingsPreferences: 'التفضيلات',
+    settingsPreferencesDesc: 'خصّص تجربتك',
+    settingsLanguage: 'اللغة',
+    settingsLanguageDesc: 'اختر لغتك المفضلة',
+    settingsNotifications: 'الإشعارات',
+    settingsNotificationsDesc: 'استقبل تذكيرات بالمهام القادمة',
+    settingsDangerZone: 'منطقة الخطر',
+    settingsDangerZoneDesc: 'إجراءات لا يمكن التراجع عنها',
+    settingsSignOut: 'تسجيل الخروج من حسابك',
+    settingsDeleteAccount: 'حذف الحساب',
+    settingsDeleteAccountDesc: 'حذف حسابك وكل بياناتك نهائياً',
+    settingsAbout: 'حول',
+    settingsVersion: 'الإصدار',
+    settingsSourceCode: 'الكود المصدري',
+    settingsEnabled: 'مُفعّلة',
+    settingsDisabled: 'متوقفة',
+    settingsChangeAvatar: 'تغيير الصورة',
+    settingsRemoveAvatar: 'إزالة الصورة',
+    settingsUploading: 'جارٍ الرفع...',
+    settingsAvatarError: 'فشل رفع الصورة',
+    settingsAvatarSuccess: 'تم تحديث الصورة',
+    settingsAvatarTooLarge: 'الصورة كبيرة جداً (2MB كحد أقصى)',
+    settingsDeleteAccountConfirmTitle: 'حذف حسابك؟',
+    settingsDeleteAccountConfirmBody:
+      'سيتم حذف حسابك وجميع مهامك وكل البيانات المرتبطة به نهائياً. لا يمكن التراجع عن هذا الإجراء.',
+    settingsDeleteAccountConfirmButton: 'نعم، احذف حسابي',
+    settingsDeleteAccountCancel: 'إلغاء',
+    settingsDeleting: 'جارٍ الحذف...',
+    settingsDeleteError: 'فشل حذف الحساب',
+    settingsDeleteSuccess: 'تم حذف الحساب. جارٍ التحويل...',
+
+    // ============ Task Detail Modal ============
+    taskDetailHint: 'اضغط على أي حقل للتعديل',
+    taskDeleteModalTitle: 'حذف هذه المهمة؟',
+    taskDeleteModalBody:
+      'لا يمكن التراجع عن هذا الإجراء. سيتم حذف المهمة نهائياً.',
+    taskDeleteModalConfirm: 'حذف',
+    taskDeleteModalCancel: 'إلغاء',
+    taskSaved: 'تم الحفظ',
+    taskStatusPending: 'قيد الانتظار',
+    taskStatusInProgress: 'قيد التنفيذ',
+    taskStatusDone: 'مكتملة',
+    taskNoDate: 'بدون تاريخ',
+    taskNoDuration: 'بدون مدة',
+    taskStatusLabel: 'الحالة',
+    taskPriorityLabel: 'الأولوية',
+    taskDurationLabel: 'المدة',
+    taskDueDateLabel: 'تاريخ الاستحقاق',
+    taskDescriptionPlaceholder: 'أضف وصفاً...',
   },
 } as const
 
@@ -179,7 +368,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     [lang],
   )
 
-  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>
+  return (
+    <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>
+  )
 }
 
 export function useLanguage() {
