@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef, type ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { CapacitorUpdater } from '@capgo/capacitor-updater';
+import { Capacitor } from '@capacitor/core';
 import {
   User as UserIcon,
   Mail,
@@ -22,7 +24,6 @@ import { useLanguage } from '../lib/language';
 import Layout from '../components/Layout';
 
 const NOTIFICATIONS_KEY = 'taskflow-notifications-enabled';
-const APP_VERSION = '1.0.0';
 const GITHUB_URL = 'https://github.com/Abdallahmoha277/AI-PoweredDailyTaskScheduler';
 
 type Notice = { type: 'success' | 'error'; text: string } | null;
@@ -31,19 +32,18 @@ export default function Settings() {
   const { lang, setLang, t } = useLanguage();
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
+  const [appVersion, setAppVersion] = useState<string>('...');
   const [notifications, setNotifications] = useState<boolean>(() => {
     if (typeof window === 'undefined') return true;
     const saved = window.localStorage.getItem(NOTIFICATIONS_KEY);
     return saved === null ? true : saved === 'true';
   });
 
-  // Avatar states
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [avatarNotice, setAvatarNotice] = useState<Notice>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Delete account states
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [isDeletingAccount, setIsDeletingAccount] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
@@ -67,6 +67,24 @@ export default function Settings() {
     }
   }, [notifications]);
 
+  useEffect(() => {
+    const fetchAppVersion = async () => {
+      if (Capacitor.isNativePlatform()) {
+        try {
+          const info = await CapacitorUpdater.current();
+          setAppVersion(info.bundle.version);
+        } catch (err) {
+          console.error('Failed to get app version:', err);
+          setAppVersion('unknown');
+        }
+      } else {
+        setAppVersion('web');
+      }
+    };
+
+    fetchAppVersion();
+  }, []);
+
   const showAvatarNotice = (type: 'success' | 'error', text: string) => {
     setAvatarNotice({ type, text });
     setTimeout(() => setAvatarNotice(null), 3500);
@@ -76,8 +94,6 @@ export default function Settings() {
     await supabase.auth.signOut();
     navigate('/');
   };
-
-  // ============ AVATAR HANDLERS ============
 
   const handleAvatarClick = () => {
     fileInputRef.current?.click();
@@ -149,8 +165,6 @@ export default function Settings() {
     }
   };
 
-  // ============ DELETE ACCOUNT HANDLER ============
-
   const handleDeleteAccount = async () => {
     if (!user) return;
     if (deleteConfirmText !== 'DELETE') return;
@@ -185,8 +199,6 @@ export default function Settings() {
     setDeleteError(null);
   };
 
-  // ============ HELPERS ============
-
   const memberSince = user?.created_at
     ? new Date(user.created_at).toLocaleDateString(
         lang === 'ar' ? 'ar-EG' : 'en-US',
@@ -199,14 +211,12 @@ export default function Settings() {
   return (
     <Layout title={t('settingsTitle')}>
       <div className="max-w-3xl mx-auto space-y-6">
-        {/* ================= ACCOUNT ================= */}
         <Section
           icon={<UserIcon className="w-5 h-5" />}
           title={t('settingsAccount')}
           description={t('settingsAccountDesc')}
         >
           <div className="flex items-center gap-5 mb-6">
-            {/* Avatar */}
             <div className="relative group">
               <button
                 type="button"
@@ -304,14 +314,12 @@ export default function Settings() {
           </div>
         </Section>
 
-        {/* ================= PREFERENCES ================= */}
         <Section
           icon={<Globe className="w-5 h-5" />}
           title={t('settingsPreferences')}
           description={t('settingsPreferencesDesc')}
         >
           <div className="space-y-4">
-            {/* Language */}
             <div className="flex items-center justify-between gap-4 py-3">
               <div className="flex items-start gap-3">
                 <Globe className="w-4 h-4 text-muted-foreground mt-1" />
@@ -336,7 +344,6 @@ export default function Settings() {
 
             <div className="border-t border-border" />
 
-            {/* Notifications Toggle */}
             <div className="flex items-center justify-between gap-4 py-3">
               <div className="flex items-start gap-3">
                 <Bell className="w-4 h-4 text-muted-foreground mt-1" />
@@ -371,7 +378,6 @@ export default function Settings() {
           </div>
         </Section>
 
-        {/* ================= DANGER ZONE ================= */}
         <div className="bg-card border border-danger/30 rounded-2xl overflow-hidden">
           <div className="p-5 border-b border-danger/20 flex items-center gap-3">
             <div className="w-9 h-9 rounded-lg bg-danger/10 flex items-center justify-center text-danger">
@@ -428,7 +434,6 @@ export default function Settings() {
           </div>
         </div>
 
-        {/* ================= ABOUT ================= */}
         <Section
           icon={<Info className="w-5 h-5" />}
           title={t('settingsAbout')}
@@ -438,7 +443,7 @@ export default function Settings() {
             <InfoRow
               icon={<Check className="w-4 h-4" />}
               label={t('settingsVersion')}
-              value={APP_VERSION}
+              value={appVersion}
             />
             <InfoRow
               icon={<Code className="w-4 h-4" />}
@@ -458,7 +463,6 @@ export default function Settings() {
         </Section>
       </div>
 
-      {/* ================= DELETE ACCOUNT MODAL ================= */}
       {showDeleteConfirm && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <motion.div
@@ -466,7 +470,6 @@ export default function Settings() {
             animate={{ opacity: 1, scale: 1 }}
             className="bg-card border border-danger/30 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
           >
-            {/* Header */}
             <div className="p-6 pb-4 text-center border-b border-border">
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-danger/10 flex items-center justify-center">
                 <AlertTriangle className="w-8 h-8 text-danger" />
@@ -479,7 +482,6 @@ export default function Settings() {
               </p>
             </div>
 
-            {/* What will be deleted */}
             <div className="p-5 bg-danger/5 border-b border-border">
               <p className="text-xs uppercase font-bold text-danger mb-3 tracking-wider">
                 This will permanently delete:
@@ -500,7 +502,6 @@ export default function Settings() {
               </ul>
             </div>
 
-            {/* Type to confirm */}
             <div className="p-5">
               <label className="block text-sm font-medium text-foreground mb-2">
                 Type{' '}
@@ -523,7 +524,6 @@ export default function Settings() {
               )}
             </div>
 
-            {/* Actions */}
             <div className="p-4 border-t border-border flex gap-3">
               <button
                 onClick={closeDeleteModal}
@@ -553,10 +553,6 @@ export default function Settings() {
     </Layout>
   );
 }
-
-// =====================================================================
-// Sub-components
-// =====================================================================
 
 function Section({
   icon,
