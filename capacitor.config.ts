@@ -10,7 +10,14 @@ const config: CapacitorConfig = {
       directUpdate: 'always',
       autoUpdate: true,
     },
+    StatusBar: {
+      overlaysWebView: true,
+      style: 'DARK',
+      backgroundColor: '#00000000',
+    },
   },
 };
 
-export default config;
+export default config;git add .
+git commit -m "feat: configure StatusBar as transparent"
+git push
