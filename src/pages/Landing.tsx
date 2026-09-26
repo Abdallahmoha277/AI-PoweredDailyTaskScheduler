@@ -105,7 +105,7 @@ export default function Landing() {
             to="/auth"
             className="mt-1 bg-primary text-primary-foreground px-6 py-3 rounded-xl font-bold text-sm hover:bg-primary/90 active:scale-[0.97] transition-all flex items-center justify-center gap-2 shadow-[0_8px_24px_rgba(245,166,35,0.28)] w-full max-w-[280px]"
           >
-            {t("heroCta")} <ArrowRight className="w-4 h-4 shrink-0 rtl:rotate-180" strokeWidth={2.5} />
+            🎯 Capgo يعمل بنجاح <ArrowRight className="w-4 h-4 shrink-0 rtl:rotate-180" strokeWidth={2.5} />
           </Link>
 
           {/* Small "no account" hint */}
