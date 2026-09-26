@@ -7,6 +7,8 @@ const config: CapacitorConfig = {
   plugins: {
     CapacitorUpdater: {
       defaultChannel: 'production',
+      directUpdate: 'always',
+      autoUpdate: true,
     },
   },
 };
