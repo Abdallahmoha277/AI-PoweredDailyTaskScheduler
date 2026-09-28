@@ -20,6 +20,9 @@ importers:
       '@capacitor/status-bar':
         specifier: ^8.0.3
         version: 8.0.3(@capacitor/core@8.5.2)
+      '@capawesome/capacitor-password-autofill':
+        specifier: ^0.1.2
+        version: 0.1.2(@capacitor/core@8.5.2)
       '@capgo/capacitor-native-biometric':
         specifier: ^8.6.11
         version: 8.6.11(@capacitor/core@8.5.2)
@@ -105,6 +108,11 @@ packages:
 
   '@capacitor/status-bar@8.0.3':
     resolution: {integrity: sha512-csSpfNeN49Hx9JaQBSJEIiEbOLtXg3kcc2IpScq2fu5L520h3AWEvsxoH8Srk1jxfRKepaJ4S4sqSC3foI4AgA==}
+    peerDependencies:
+      '@capacitor/core': '>=8.0.0'
+
+  '@capawesome/capacitor-password-autofill@0.1.2':
+    resolution: {integrity: sha512-DJvALhbG7W2vQZ8rNzsoYUge0vTZrAiahtDBDxFJzBUM8L8yNwdBPWSFB9ZQwZLR50s2mybg4DWrrj2Buyh07w==}
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
@@ -1117,6 +1125,10 @@ snapshots:
       tslib: 2.8.1
 
   '@capacitor/status-bar@8.0.3(@capacitor/core@8.5.2)':
+    dependencies:
+      '@capacitor/core': 8.5.2
+
+  '@capawesome/capacitor-password-autofill@0.1.2(@capacitor/core@8.5.2)':
     dependencies:
       '@capacitor/core': 8.5.2
 
