@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { Bot, Mail, Lock, Zap } from 'lucide-react';
@@ -14,6 +14,21 @@ export default function Auth() {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const isArabic = lang === 'ar';
+
+  // Auto sign-out: إذا وصل المستخدم إلى هذه الصفحة ولديه جلسة نشطة → يُسجَّل خروجه
+  useEffect(() => {
+    const enforceSignOut = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (session) {
+        await supabase.auth.signOut();
+      }
+    };
+
+    enforceSignOut();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
