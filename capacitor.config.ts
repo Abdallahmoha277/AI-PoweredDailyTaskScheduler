@@ -18,6 +18,3 @@ const config: CapacitorConfig = {
   },
 };
 
-export default config;git add .
-git commit -m "feat: configure StatusBar as transparent"
-git push
