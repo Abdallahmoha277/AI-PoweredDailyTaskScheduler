@@ -6,18 +6,50 @@ import Dashboard from "./pages/Dashboard"
 import Calendar from "./pages/Calendar";
 import Assistant from "./pages/Assistant";
 import Settings from "./pages/Settings";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <LanguageProvider>
       <Router>
         <Routes>
+          {/* صفحات عامة - متاحة للجميع */}
           <Route path="/" element={<Landing />} />
           <Route path="/auth" element={<Auth />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/calendar" element={<Calendar />} />
-          <Route path="/assistant" element={<Assistant />} />
-          <Route path="/settings" element={<Settings />} />
+
+          {/* صفحات محمية - تتطلب تسجيل دخول */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/calendar"
+            element={
+              <ProtectedRoute>
+                <Calendar />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/assistant"
+            element={
+              <ProtectedRoute>
+                <Assistant />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </Router>
     </LanguageProvider>
