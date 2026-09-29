@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CapacitorUpdater } from '@capgo/capacitor-updater';
 import { Capacitor } from '@capacitor/core';
+import { useTheme, type ThemeMode } from '../lib/theme';
 import {
   User as UserIcon,
   Mail,
@@ -18,6 +19,9 @@ import {
   Camera,
   Loader2,
   AlertTriangle,
+  Monitor,
+  Sun,
+  Moon,
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useLanguage } from '../lib/language';
@@ -30,6 +34,7 @@ type Notice = { type: 'success' | 'error'; text: string } | null;
 
 export default function Settings() {
   const { lang, setLang, t } = useLanguage();
+  const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
   const [appVersion, setAppVersion] = useState<string>('...');
@@ -320,6 +325,33 @@ export default function Settings() {
           description={t('settingsPreferencesDesc')}
         >
           <div className="space-y-4">
+            {/* Theme */}
+            <div className="flex items-center justify-between gap-4 py-3">
+              <div className="flex items-start gap-3">
+                <Sun className="w-4 h-4 text-muted-foreground mt-1" />
+                <div>
+                  <p className="font-medium text-foreground">
+                    {t('settingsTheme')}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {t('settingsThemeDesc')}
+                  </p>
+                </div>
+              </div>
+              <ThemeSelector
+                value={theme}
+                onChange={setTheme}
+                labels={{
+                  auto: t('themeAuto'),
+                  light: t('themeLight'),
+                  dark: t('themeDark'),
+                }}
+              />
+            </div>
+
+            <div className="border-t border-border" />
+
+            {/* Language */}
             <div className="flex items-center justify-between gap-4 py-3">
               <div className="flex items-start gap-3">
                 <Globe className="w-4 h-4 text-muted-foreground mt-1" />
@@ -344,6 +376,7 @@ export default function Settings() {
 
             <div className="border-t border-border" />
 
+            {/* Notifications */}
             <div className="flex items-center justify-between gap-4 py-3">
               <div className="flex items-start gap-3">
                 <Bell className="w-4 h-4 text-muted-foreground mt-1" />
@@ -601,6 +634,50 @@ function InfoRow({
       <span className="text-sm font-medium text-foreground truncate max-w-[60%] text-right">
         {value}
       </span>
+    </div>
+  );
+}
+
+function ThemeSelector({
+  value,
+  onChange,
+  labels,
+}: {
+  value: ThemeMode;
+  onChange: (v: ThemeMode) => void;
+  labels: { auto: string; light: string; dark: string };
+}) {
+  const options: {
+    key: ThemeMode;
+    icon: typeof Monitor;
+    label: string;
+  }[] = [
+    { key: 'auto', icon: Monitor, label: labels.auto },
+    { key: 'light', icon: Sun, label: labels.light },
+    { key: 'dark', icon: Moon, label: labels.dark },
+  ];
+
+  return (
+    <div className="inline-flex p-1 rounded-full bg-muted border border-border">
+      {options.map(({ key, icon: Icon, label }) => {
+        const active = value === key;
+        return (
+          <button
+            key={key}
+            type="button"
+            onClick={() => onChange(key)}
+            aria-pressed={active}
+            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 ${
+              active
+                ? 'bg-card text-foreground shadow-sm'
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            <Icon className="w-3.5 h-3.5 shrink-0" />
+            <span>{label}</span>
+          </button>
+        );
+      })}
     </div>
   );
 }

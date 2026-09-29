@@ -49,7 +49,7 @@
 }
 
 /* =====================================================================
-   Light Palette — Jadoo Warm
+   Light Palette (default)
    ===================================================================== */
 :root {
   --background: #FFFFFF;
@@ -84,59 +84,103 @@
   --shadow-md: 0 4px 12px rgba(26, 35, 64, 0.08), 0 2px 4px rgba(26, 35, 64, 0.04);
   --shadow-lg: 0 16px 32px rgba(26, 35, 64, 0.10), 0 4px 8px rgba(26, 35, 64, 0.05);
   --shadow-glow: 0 0 24px rgba(245, 166, 35, 0.25);
+
+  /* Dark palette — stored for later application */
+  --dark-background: #0A0A0B;
+  --dark-surface: #121214;
+  --dark-foreground: #FAFAFA;
+  --dark-card: #18181B;
+  --dark-card-foreground: #FAFAFA;
+  --dark-primary: #FF8C42;
+  --dark-primary-foreground: #0A0A0B;
+  --dark-primary-muted: rgba(255, 140, 66, 0.15);
+  --dark-secondary: #27272A;
+  --dark-secondary-foreground: #FAFAFA;
+  --dark-accent: #F97316;
+  --dark-accent-foreground: #0A0A0B;
+  --dark-muted: #1F1F23;
+  --dark-muted-foreground: #A1A1AA;
+  --dark-border: #27272A;
+  --dark-border-strong: #3F3F46;
+  --dark-ring: #FF8C42;
+  --dark-success: #22C55E;
+  --dark-warning: #F59E0B;
+  --dark-danger: #EF4444;
+  --dark-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5), 0 1px 1px rgba(0, 0, 0, 0.4);
+  --dark-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+  --dark-shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.4);
+  --dark-shadow-glow: 0 0 24px rgba(255, 140, 66, 0.35);
 }
 
 /* =====================================================================
-   Dark Palette — Pinotes-inspired
+   Dark Theme — Auto (follows system preference)
    ===================================================================== */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0A0A0B;
-    --surface: #121214;
-    --foreground: #FAFAFA;
-
-    --card: #18181B;
-    --card-foreground: #FAFAFA;
-
-    --primary: #FF8C42;
-    --primary-foreground: #0A0A0B;
-    --primary-muted: rgba(255, 140, 66, 0.15);
-
-    --secondary: #27272A;
-    --secondary-foreground: #FAFAFA;
-
-    --accent: #F97316;
-    --accent-foreground: #0A0A0B;
-
-    --muted: #1F1F23;
-    --muted-foreground: #A1A1AA;
-
-    --border: #27272A;
-    --border-strong: #3F3F46;
-    --ring: #FF8C42;
-
-    --success: #22C55E;
-    --warning: #F59E0B;
-    --danger: #EF4444;
-
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5), 0 1px 1px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.4);
-    --shadow-glow: 0 0 24px rgba(255, 140, 66, 0.35);
+  html[data-theme='auto'],
+  html:not([data-theme]) {
+    --background: var(--dark-background);
+    --surface: var(--dark-surface);
+    --foreground: var(--dark-foreground);
+    --card: var(--dark-card);
+    --card-foreground: var(--dark-card-foreground);
+    --primary: var(--dark-primary);
+    --primary-foreground: var(--dark-primary-foreground);
+    --primary-muted: var(--dark-primary-muted);
+    --secondary: var(--dark-secondary);
+    --secondary-foreground: var(--dark-secondary-foreground);
+    --accent: var(--dark-accent);
+    --accent-foreground: var(--dark-accent-foreground);
+    --muted: var(--dark-muted);
+    --muted-foreground: var(--dark-muted-foreground);
+    --border: var(--dark-border);
+    --border-strong: var(--dark-border-strong);
+    --ring: var(--dark-ring);
+    --success: var(--dark-success);
+    --warning: var(--dark-warning);
+    --danger: var(--dark-danger);
+    --shadow-sm: var(--dark-shadow-sm);
+    --shadow-md: var(--dark-shadow-md);
+    --shadow-lg: var(--dark-shadow-lg);
+    --shadow-glow: var(--dark-shadow-glow);
   }
+}
 
-  ::selection {
-    background: rgba(255, 140, 66, 0.35);
-    color: #FFFFFF;
-  }
+/* =====================================================================
+   Dark Theme — Forced (user chose explicitly)
+   ===================================================================== */
+html[data-theme='dark'] {
+  color-scheme: dark;
+  --background: var(--dark-background);
+  --surface: var(--dark-surface);
+  --foreground: var(--dark-foreground);
+  --card: var(--dark-card);
+  --card-foreground: var(--dark-card-foreground);
+  --primary: var(--dark-primary);
+  --primary-foreground: var(--dark-primary-foreground);
+  --primary-muted: var(--dark-primary-muted);
+  --secondary: var(--dark-secondary);
+  --secondary-foreground: var(--dark-secondary-foreground);
+  --accent: var(--dark-accent);
+  --accent-foreground: var(--dark-accent-foreground);
+  --muted: var(--dark-muted);
+  --muted-foreground: var(--dark-muted-foreground);
+  --border: var(--dark-border);
+  --border-strong: var(--dark-border-strong);
+  --ring: var(--dark-ring);
+  --success: var(--dark-success);
+  --warning: var(--dark-warning);
+  --danger: var(--dark-danger);
+  --shadow-sm: var(--dark-shadow-sm);
+  --shadow-md: var(--dark-shadow-md);
+  --shadow-lg: var(--dark-shadow-lg);
+  --shadow-glow: var(--dark-shadow-glow);
+}
 
-  ::-webkit-scrollbar-thumb {
-    background: #3F3F46;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #52525B;
-  }
+/* =====================================================================
+   Light Theme — Forced
+   ===================================================================== */
+html[data-theme='light'] {
+  color-scheme: light;
 }
 
 /* =====================================================================
@@ -220,12 +264,46 @@ html[lang='ar'] * {
   background: #B8B6B0;
 }
 
+/* Dark scrollbar for forced dark + auto dark */
+html[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background: #3F3F46;
+}
+
+html[data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
+  background: #52525B;
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme='auto'] ::-webkit-scrollbar-thumb,
+  html:not([data-theme]) ::-webkit-scrollbar-thumb {
+    background: #3F3F46;
+  }
+
+  html[data-theme='auto'] ::-webkit-scrollbar-thumb:hover,
+  html:not([data-theme]) ::-webkit-scrollbar-thumb:hover {
+    background: #52525B;
+  }
+}
+
 /* =====================================================================
    Selection
    ===================================================================== */
 ::selection {
   background: rgba(245, 166, 35, 0.30);
   color: #1A2340;
+}
+
+html[data-theme='dark'] ::selection {
+  background: rgba(255, 140, 66, 0.35);
+  color: #FFFFFF;
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme='auto'] ::selection,
+  html:not([data-theme]) ::selection {
+    background: rgba(255, 140, 66, 0.35);
+    color: #FFFFFF;
+  }
 }
 
 /* =====================================================================
