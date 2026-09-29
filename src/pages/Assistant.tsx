@@ -41,10 +41,11 @@ export default function Assistant() {
 
   // Load user avatar
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      if (data.user) {
-        setAvatarUrl(data.user.user_metadata?.avatar_url || null);
-        setUserInitial(data.user.email?.charAt(0).toUpperCase() || 'U');
+    supabase.auth.getSession().then(({ data }) => {
+      const user = data.session?.user;
+      if (user) {
+        setAvatarUrl(user.user_metadata?.avatar_url || null);
+        setUserInitial(user.email?.charAt(0).toUpperCase() || 'U');
       }
     });
   }, []);
@@ -139,8 +140,9 @@ export default function Assistant() {
 
     try {
       const {
-        data: { user },
-      } = await supabase.auth.getUser();
+        data: { session },
+      } = await supabase.auth.getSession();
+      const user = session?.user ?? null;
 
       if (!user) {
         addMessage({ role: 'error', text: 'You must be signed in.' });

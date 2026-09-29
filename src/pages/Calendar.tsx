@@ -61,8 +61,9 @@ export default function Calendar() {
   // ============ FETCH TASKS ============
   const fetchTasks = async () => {
     const {
-      data: { user: authUser },
-    } = await supabase.auth.getUser();
+      data: { session },
+    } = await supabase.auth.getSession();
+    const authUser = session?.user ?? null;
 
     if (!authUser) {
       navigate('/auth');

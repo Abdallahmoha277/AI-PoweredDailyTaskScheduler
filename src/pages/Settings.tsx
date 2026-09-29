@@ -55,13 +55,14 @@ export default function Settings() {
   const [deleteConfirmText, setDeleteConfirmText] = useState('');
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      if (!data.user) {
+    supabase.auth.getSession().then(({ data }) => {
+      const user = data.session?.user;
+      if (!user) {
         navigate('/auth');
         return;
       }
-      setUser(data.user);
-      const existingAvatar = data.user.user_metadata?.avatar_url;
+      setUser(user);
+      const existingAvatar = user.user_metadata?.avatar_url;
       if (existingAvatar) setAvatarUrl(existingAvatar);
     });
   }, [navigate]);
