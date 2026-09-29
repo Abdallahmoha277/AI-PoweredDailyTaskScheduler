@@ -8,7 +8,6 @@ import {
   Sparkles,
   ArrowRight,
 } from 'lucide-react';
-import { useLanguage } from '../lib/language';
 
 type SpotlightType = 'tip' | 'reminder' | 'announcement' | 'ad';
 
@@ -106,7 +105,6 @@ const TYPE_STYLES: Record<
 };
 
 export default function SpotlightCard() {
-  const { t } = useLanguage();
   const [dismissed, setDismissed] = useState<string[]>(() => {
     if (typeof window === 'undefined') return [];
     try {

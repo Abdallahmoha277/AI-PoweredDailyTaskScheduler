@@ -5,7 +5,6 @@ import {
   Calendar as CalendarIcon,
   Flag,
   Clock,
-  Circle,
   Loader2,
   Plus,
 } from 'lucide-react';

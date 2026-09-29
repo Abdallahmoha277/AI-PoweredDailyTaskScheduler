@@ -1,0 +1,17 @@
+{
+  "name": "TaskFlow AI",
+  "short_name": "TaskFlow",
+  "description": "AI-powered daily task scheduler",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#F5A623",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
