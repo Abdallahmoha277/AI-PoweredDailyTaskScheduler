@@ -31,7 +31,7 @@ export default function Landing() {
   return (
     <div
       dir={isArabic ? "rtl" : "ltr"}
-      className="h-[100dvh] overflow-hidden bg-background text-foreground flex flex-col"
+      className="min-h-[100dvh] bg-background text-foreground flex flex-col"
     >
       {/* ==================== NAVBAR ==================== */}
       <header className="shrink-0 border-b border-border/60 bg-background/80 backdrop-blur-sm">

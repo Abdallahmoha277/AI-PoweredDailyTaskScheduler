@@ -67,31 +67,19 @@ export default function Assistant() {
     }
   }, [messages]);
 
-  // Prevent the page from scrolling when the keyboard opens
+  // Prevent the page from scrolling when the on-screen keyboard opens.
+  // Only listen to viewport resize (not generic scroll, which fires on every
+  // user gesture and causes flickering).
   useEffect(() => {
     const vv = window.visualViewport;
     if (!vv) return;
 
     const lockScroll = () => {
-      // If the page somehow scrolled, snap it back to the top of the app shell.
       if (window.scrollY !== 0) window.scrollTo(0, 0);
-      if (document.documentElement.scrollTop !== 0) {
-        document.documentElement.scrollTop = 0;
-      }
-      if (document.body.scrollTop !== 0) {
-        document.body.scrollTop = 0;
-      }
     };
 
     vv.addEventListener('resize', lockScroll);
-    vv.addEventListener('scroll', lockScroll);
-    window.addEventListener('scroll', lockScroll);
-
-    return () => {
-      vv.removeEventListener('resize', lockScroll);
-      vv.removeEventListener('scroll', lockScroll);
-      window.removeEventListener('scroll', lockScroll);
-    };
+    return () => vv.removeEventListener('resize', lockScroll);
   }, []);
 
   const addMessage = (msg: Omit<Message, 'id' | 'timestamp'>) => {

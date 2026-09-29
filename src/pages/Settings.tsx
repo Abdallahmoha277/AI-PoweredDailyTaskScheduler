@@ -462,7 +462,9 @@ export default function Settings() {
               >
                 {isDeletingAccount
                   ? t('settingsDeleting')
-                  : t('settingsDeleteAccount')}
+                  : isArabic
+                    ? 'حذف'
+                    : 'Delete'}
               </button>
             </div>
           </div>
