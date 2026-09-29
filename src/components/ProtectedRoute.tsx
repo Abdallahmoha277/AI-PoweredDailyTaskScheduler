@@ -11,16 +11,33 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const [hasSession, setHasSession] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
+
     const checkSession = async () => {
       const {
         data: { session },
       } = await supabase.auth.getSession();
 
-      setHasSession(!!session);
-      setIsLoading(false);
+      if (isMounted) {
+        setHasSession(!!session);
+        setIsLoading(false);
+      }
     };
 
     checkSession();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (isMounted) {
+        setHasSession(!!session);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+      subscription?.unsubscribe();
+    };
   }, []);
 
   if (isLoading) {

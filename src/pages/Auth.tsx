@@ -160,42 +160,21 @@ export default function Auth() {
     useRateLimiter();
 
   // =====================================================================
-  // 🔒 AUTO SIGN-OUT ON AUTH PAGE (prevent back-button session leak)
+  // 🔒 REDIRECT AUTHENTICATED USERS TO DASHBOARD
   // =====================================================================
   useEffect(() => {
     let isMounted = true;
 
-    const enforceSignOut = async () => {
-      try {
-        const {
-          data: { session },
-        } = await supabase.auth.getSession();
-
-        if (session && isMounted) {
-          await supabase.auth.signOut();
-        }
-      } catch {
-        // Silent fail — auth page should never crash on sign-out
-      }
-    };
-
-    enforceSignOut();
-
-    // 🔒 Listen for session changes (token expiry, remote sign-out, etc.)
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        // If user is signed in while on /auth → sign out immediately
-        supabase.auth.signOut();
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session && isMounted) {
+        navigate('/dashboard', { replace: true });
       }
     });
 
     return () => {
       isMounted = false;
-      subscription?.unsubscribe();
     };
-  }, []);
+  }, [navigate]);
 
   // =====================================================================
   // 🔒 CLEAR ERROR ON INPUT CHANGE (prevent error message leaking)
