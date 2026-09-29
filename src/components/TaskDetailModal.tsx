@@ -373,7 +373,7 @@ export default function TaskDetailModal({
                       due_date: v ? new Date(v).toISOString() : null,
                     });
                   }}
-                  className="appearance-none cursor-pointer rounded-full px-3 py-1 text-xs font-semibold bg-muted text-foreground border-0 outline-none focus:ring-2 focus:ring-primary/30 [color-scheme:dark]"
+                  className="appearance-none cursor-pointer rounded-full px-3 py-1 text-xs font-semibold bg-muted text-foreground border-0 outline-none focus:ring-2 focus:ring-primary/30"
                 />
               </FieldRow>
             </div>

@@ -180,7 +180,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
               disabled={isSubmitting}
-              className="w-full bg-background border border-border rounded-lg p-2.5 text-foreground outline-none focus:border-primary/60 focus:ring-2 focus:ring-primary/15 transition-all disabled:opacity-60 [color-scheme:dark]"
+              className="w-full bg-background border border-border rounded-lg p-2.5 text-foreground outline-none focus:border-primary/60 focus:ring-2 focus:ring-primary/15 transition-all disabled:opacity-60"
             />
           </div>
 

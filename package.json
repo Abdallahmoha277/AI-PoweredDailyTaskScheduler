@@ -1,5 +1,5 @@
 {
-  "name": "figma-make-app",
+  "name": "taskflow-ai",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -31,6 +31,8 @@
     "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capgo/cli": "^8.68.1",
     "@tailwindcss/vite": "^4.0.0",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
