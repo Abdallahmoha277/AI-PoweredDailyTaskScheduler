@@ -179,11 +179,6 @@ const translations = {
   },
   ar: {
     // ============ Task Modal ============
-    settingsTheme: 'المظهر',
-    settingsThemeDesc: 'اختر المظهر الذي يريحك',
-    themeAuto: 'تلقائي',
-    themeLight: 'فاتح',
-    themeDark: 'داكن',
     modalAddTitle: 'إضافة مهمة جديدة',
     taskTitleLabel: 'عنوان المهمة *',
     taskTitlePlaceholder: 'ما الذي تود إنجازه؟',
@@ -344,6 +339,11 @@ const translations = {
     taskDurationLabel: 'المدة',
     taskDueDateLabel: 'تاريخ الاستحقاق',
     taskDescriptionPlaceholder: 'أضف وصفاً...',
+    settingsTheme: 'المظهر',
+    settingsThemeDesc: 'اختر المظهر الذي يريحك',
+    themeAuto: 'تلقائي',
+    themeLight: 'فاتح',
+    themeDark: 'داكن',
   },
 } as const
 

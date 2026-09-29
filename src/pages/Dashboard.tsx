@@ -231,11 +231,11 @@ export default function Dashboard() {
         <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="h-9 md:h-10 px-2.5 md:px-4 bg-primary text-primary-foreground rounded-full flex items-center gap-1.5 hover:bg-primary/90 active:scale-95 transition-all shadow-sm font-semibold text-sm shrink-0"
+            className="hidden md:flex h-10 px-4 bg-primary text-primary-foreground rounded-full items-center gap-1.5 hover:bg-primary/90 active:scale-95 transition-all shadow-sm font-semibold text-sm shrink-0"
             aria-label={t('modalAddTitle')}
           >
             <Plus className="w-4 h-4 shrink-0" strokeWidth={2.75} />
-            <span className="leading-none hidden xs:inline">Add</span>
+            <span className="leading-none">Add</span>
           </button>
 
           <button

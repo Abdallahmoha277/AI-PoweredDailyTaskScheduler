@@ -8,6 +8,7 @@ import Calendar from "./pages/Calendar";
 import Assistant from "./pages/Assistant";
 import Settings from "./pages/Settings";
 import ProtectedRoute from "./components/ProtectedRoute";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -50,6 +51,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
+
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
       </LanguageProvider>
