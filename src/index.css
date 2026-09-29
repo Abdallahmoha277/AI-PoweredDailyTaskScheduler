@@ -15,7 +15,6 @@
    Theme Tokens
    ===================================================================== */
 @theme inline {
-  /* Colors */
   --color-background: var(--background);
   --color-surface: var(--surface);
   --color-foreground: var(--foreground);
@@ -37,66 +36,107 @@
   --color-warning: var(--warning);
   --color-danger: var(--danger);
 
-  /* Fonts */
   --font-sans: 'Inter Variable', 'IBM Plex Sans Arabic', system-ui, sans-serif;
   --font-display: 'Space Grotesk Variable', 'IBM Plex Sans Arabic', sans-serif;
   --font-mono: 'JetBrains Mono Variable', monospace;
 
-  /* Radius */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
 
-  /* Extra breakpoints */
   --breakpoint-xs: 380px;
 }
 
 /* =====================================================================
-   Palette — Jadoo Warm Light
+   Light Palette — Jadoo Warm
    ===================================================================== */
 :root {
-  /* Surfaces */
   --background: #FFFFFF;
   --surface: #F8F6F2;
-  --card: #FFFFFF;
-  --card-foreground: #1A2340;
   --foreground: #1A2340;
 
-  /* Primary — warm amber/orange (CTA) */
+  --card: #FFFFFF;
+  --card-foreground: #1A2340;
+
   --primary: #F5A623;
   --primary-foreground: #FFFFFF;
   --primary-muted: rgba(245, 166, 35, 0.12);
 
-  /* Secondary — deep navy */
   --secondary: #1A2340;
   --secondary-foreground: #FFFFFF;
 
-  /* Accent — coral */
   --accent: #FF6B6B;
   --accent-foreground: #FFFFFF;
 
-  /* Muted */
   --muted: #F1EFEB;
   --muted-foreground: #6B7280;
 
-  /* Borders */
   --border: #E8E6E1;
   --border-strong: #D4D2CD;
-
-  /* Ring */
   --ring: #F5A623;
 
-  /* Semantic */
   --success: #10B981;
   --warning: #F59E0B;
   --danger: #EF4444;
 
-  /* Shadows */
   --shadow-sm: 0 1px 2px rgba(26, 35, 64, 0.06), 0 1px 1px rgba(26, 35, 64, 0.04);
   --shadow-md: 0 4px 12px rgba(26, 35, 64, 0.08), 0 2px 4px rgba(26, 35, 64, 0.04);
   --shadow-lg: 0 16px 32px rgba(26, 35, 64, 0.10), 0 4px 8px rgba(26, 35, 64, 0.05);
   --shadow-glow: 0 0 24px rgba(245, 166, 35, 0.25);
+}
+
+/* =====================================================================
+   Dark Palette — Pinotes-inspired
+   ===================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0A0A0B;
+    --surface: #121214;
+    --foreground: #FAFAFA;
+
+    --card: #18181B;
+    --card-foreground: #FAFAFA;
+
+    --primary: #FF8C42;
+    --primary-foreground: #0A0A0B;
+    --primary-muted: rgba(255, 140, 66, 0.15);
+
+    --secondary: #27272A;
+    --secondary-foreground: #FAFAFA;
+
+    --accent: #F97316;
+    --accent-foreground: #0A0A0B;
+
+    --muted: #1F1F23;
+    --muted-foreground: #A1A1AA;
+
+    --border: #27272A;
+    --border-strong: #3F3F46;
+    --ring: #FF8C42;
+
+    --success: #22C55E;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5), 0 1px 1px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.4);
+    --shadow-glow: 0 0 24px rgba(255, 140, 66, 0.35);
+  }
+
+  ::selection {
+    background: rgba(255, 140, 66, 0.35);
+    color: #FFFFFF;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #3F3F46;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #52525B;
+  }
 }
 
 /* =====================================================================
@@ -107,7 +147,7 @@
 }
 
 html {
-  color-scheme: light;
+  color-scheme: light dark;
   scroll-behavior: smooth;
   -webkit-tap-highlight-color: transparent;
 }
@@ -128,7 +168,7 @@ body {
 }
 
 /* =====================================================================
-   Typography helpers
+   Typography
    ===================================================================== */
 h1, h2, h3, h4 {
   font-family: var(--font-display);
@@ -141,9 +181,6 @@ code, pre, .font-mono {
   font-feature-settings: 'zero';
 }
 
-/* =====================================================================
-   Arabic font override — no letter-spacing!
-   ===================================================================== */
 html[lang='ar'] body {
   font-family: 'IBM Plex Sans Arabic', var(--font-sans);
 }
@@ -162,7 +199,7 @@ html[lang='ar'] * {
 }
 
 /* =====================================================================
-   Custom scrollbar
+   Scrollbar
    ===================================================================== */
 ::-webkit-scrollbar {
   width: 8px;
@@ -192,7 +229,7 @@ html[lang='ar'] * {
 }
 
 /* =====================================================================
-   Focus visible
+   Focus
    ===================================================================== */
 :focus {
   outline: none;
@@ -204,8 +241,6 @@ html[lang='ar'] * {
   border-radius: 4px;
 }
 
-/* Force-clear any outline on select elements — 
-   the parent label handles the visible focus state */
 select,
 select:focus,
 select:focus-visible,
@@ -217,7 +252,6 @@ select:active {
   appearance: none;
 }
 
-/* Show focus ring on the parent label instead */
 label:has(> select:focus),
 label:has(> select:focus-visible) {
   outline: 2px solid var(--ring);
@@ -225,7 +259,7 @@ label:has(> select:focus-visible) {
 }
 
 /* =====================================================================
-   Prevent horizontal overflow globally
+   Global overflow guard
    ===================================================================== */
 img, video, iframe, svg {
   max-width: 100%;

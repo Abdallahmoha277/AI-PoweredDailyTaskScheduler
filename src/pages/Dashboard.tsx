@@ -49,7 +49,6 @@ export default function Dashboard() {
     if (n) setTimeout(() => setNotice(null), 4000);
   };
 
-  // ============ FETCH — FILTERED: today + unscheduled only ============
   const fetchTasks = async (userIdParam?: string) => {
     const targetUserId = userIdParam || user?.id;
     if (!targetUserId) return;
@@ -119,7 +118,6 @@ export default function Dashboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
 
-  // ============ TASK ACTIONS ============
   const toggleTask = async (id: string, currentStatus: string) => {
     const newStatus = currentStatus === 'done' ? 'pending' : 'done';
 
@@ -232,15 +230,15 @@ export default function Dashboard() {
         <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="h-9 md:h-10 px-2.5 md:px-4 bg-primary text-primary-foreground rounded-md flex items-center gap-1.5 hover:bg-primary/90 active:scale-95 transition-all shadow-sm font-semibold text-sm shrink-0"
+            className="h-9 md:h-10 px-2.5 md:px-4 bg-primary text-primary-foreground rounded-full flex items-center gap-1.5 hover:bg-primary/90 active:scale-95 transition-all shadow-sm font-semibold text-sm shrink-0"
             aria-label={t('modalAddTitle')}
           >
             <Plus className="w-4 h-4 shrink-0" strokeWidth={2.75} />
-            <span className="leading-none">Add</span>
+            <span className="leading-none hidden xs:inline">Add</span>
           </button>
 
           <button
-            className="hidden md:flex h-10 px-4 bg-card border border-border rounded-md items-center gap-2 hover:border-primary/40 active:scale-95 transition-all shrink-0"
+            className="hidden md:flex h-10 px-4 bg-card border border-border rounded-full items-center gap-2 hover:border-primary/40 active:scale-95 transition-all shrink-0"
             aria-label={t('generateMyDay')}
           >
             <Sparkles className="w-4 h-4 text-primary shrink-0" />
@@ -263,7 +261,7 @@ export default function Dashboard() {
     >
       {notice && (
         <div
-          className={`mb-4 md:mb-6 p-3 rounded-md text-sm font-medium border ${
+          className={`mb-4 md:mb-6 p-3 rounded-2xl text-sm font-medium border ${
             notice.type === 'success'
               ? 'bg-success/10 border-success/30 text-success'
               : 'bg-danger/10 border-danger/30 text-danger'
@@ -276,7 +274,7 @@ export default function Dashboard() {
       <div className="flex gap-6 flex-col lg:flex-row">
         <div className="flex-1 space-y-4 md:space-y-6 min-w-0">
           <div className="flex items-center justify-between gap-2">
-            <h2 className="text-base md:text-lg font-medium text-muted-foreground">
+            <h2 className="text-base md:text-lg font-semibold text-foreground">
               {t('timeline')}
             </h2>
             <span className="text-xs md:text-sm bg-muted px-2.5 md:px-3 py-1 rounded-full text-muted-foreground whitespace-nowrap">
@@ -290,7 +288,7 @@ export default function Dashboard() {
           <div className="space-y-3">
             <AnimatePresence mode="popLayout" initial={false}>
               {tasks.length === 0 ? (
-                <div className="p-6 md:p-8 text-center border border-dashed border-border rounded-md text-muted-foreground text-sm">
+                <div className="p-8 text-center border border-dashed border-border rounded-2xl text-muted-foreground text-sm">
                   {t('emptyState')}
                 </div>
               ) : (
@@ -309,14 +307,14 @@ export default function Dashboard() {
                       opacity: { duration: 0.18 },
                     }}
                     onClick={() => setSelectedTask(task)}
-                    className={`flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-md border transition-colors cursor-pointer ${
+                    className={`flex items-start gap-3 md:gap-4 p-4 rounded-2xl border transition-all cursor-pointer ${
                       task.status === 'done'
-                        ? 'bg-card/30 border-border/30 opacity-60'
-                        : 'bg-card border-border hover:border-primary/40'
+                        ? 'bg-card/40 border-border/30 opacity-60'
+                        : 'bg-card border-border hover:border-primary/40 hover:shadow-[0_4px_20px_rgba(255,140,66,0.08)]'
                     }`}
                   >
                     {/* Time column — desktop only */}
-                    <div className="hidden md:flex flex-shrink-0 pt-1 flex-col items-center gap-1 w-16 text-center">
+                    <div className="hidden md:flex flex-shrink-0 pt-0.5 flex-col items-center gap-1 w-16 text-center">
                       <span className="text-xs font-semibold text-muted-foreground">
                         {task.time}
                       </span>
@@ -354,13 +352,12 @@ export default function Dashboard() {
                         </div>
 
                         {task.priority === 'high' && (
-                          <span className="inline-block mt-1.5 md:mt-2 text-[10px] uppercase font-bold text-danger bg-danger/10 px-2 py-0.5 rounded-sm">
+                          <span className="inline-block mt-2 text-[10px] uppercase font-bold text-danger bg-danger/10 px-2 py-0.5 rounded-full">
                             {t('highPriority')}
                           </span>
                         )}
                       </div>
 
-                      {/* Actions */}
                       <div className="flex items-center gap-0.5 md:gap-2 shrink-0">
                         <button
                           onClick={(e) => {
@@ -403,9 +400,8 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Right column — AI + Spotlight */}
         <div className="w-full lg:w-[400px] shrink-0 space-y-4">
-          <div className="bg-gradient-to-b from-card to-background border border-border rounded-md p-4 md:p-5 relative overflow-hidden">
+          <div className="bg-card border border-border rounded-2xl p-4 md:p-5 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-3xl rounded-full pointer-events-none" />
             <h2 className="text-sm font-semibold text-primary flex items-center gap-2 mb-3 md:mb-4">
               <Bot className="w-4 h-4" /> {t('aiAssistant')}
@@ -417,12 +413,12 @@ export default function Dashboard() {
                 onChange={(e) => setAiInput(e.target.value)}
                 placeholder={t('aiPlaceholder')}
                 disabled={isAiLoading}
-                className="w-full bg-background border border-border focus:border-primary/60 focus:ring-[3px] focus:ring-primary/15 rounded-md py-3 pl-4 pr-12 text-sm transition-all text-foreground placeholder:text-muted-foreground disabled:opacity-60 outline-none"
+                className="w-full bg-background border border-border focus:border-primary/60 focus:ring-[3px] focus:ring-primary/15 rounded-full py-3 pl-4 pr-12 text-sm transition-all text-foreground placeholder:text-muted-foreground disabled:opacity-60 outline-none"
               />
               <button
                 type="submit"
                 disabled={isAiLoading}
-                className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50"
+                className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-colors disabled:opacity-50"
                 aria-label="Send"
               >
                 {isAiLoading ? (
@@ -447,7 +443,6 @@ export default function Dashboard() {
         />
       )}
 
-      {/* ============ TASK DETAIL MODAL (reused from Calendar) ============ */}
       <AnimatePresence>
         {selectedTask && user && (
           <TaskDetailModal
@@ -459,6 +454,16 @@ export default function Dashboard() {
           />
         )}
       </AnimatePresence>
+
+      {/* Floating Action Button — mobile only */}
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="md:hidden fixed bottom-20 end-4 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-[0_8px_24px_rgba(255,140,66,0.4)] flex items-center justify-center active:scale-95 transition-all z-30"
+        aria-label={t('modalAddTitle')}
+        style={{ marginBottom: 'env(safe-area-inset-bottom, 0px)' }}
+      >
+        <Plus className="w-6 h-6" strokeWidth={2.5} />
+      </button>
     </Layout>
   );
 }
