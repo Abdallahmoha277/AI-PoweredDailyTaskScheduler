@@ -152,12 +152,13 @@ export default function Auth() {
 
   // =====================================================================
   // 🔒 REDIRECT AUTHENTICATED USERS TO DASHBOARD
+  // Guard: do NOT redirect while the signup success screen is visible.
   // =====================================================================
   useEffect(() => {
     let isMounted = true;
 
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session && isMounted) {
+      if (session && isMounted && !signupSuccess) {
         navigate('/dashboard', { replace: true });
       }
     });
@@ -165,7 +166,8 @@ export default function Auth() {
     return () => {
       isMounted = false;
     };
-  }, [navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigate, signupSuccess]);
 
   // =====================================================================
   // 🔒 CLEAR ERROR ON INPUT CHANGE
@@ -310,32 +312,29 @@ export default function Auth() {
         setPassword('');
         setConfirmPassword('');
 
-        // If email confirmation is required, user won't have session yet
-        if (signUpData?.user && !signUpData.session) {
-          // Show success screen
-          setSignupSuccess(sanitizedEmail);
+        // =============================================================
+        // ALWAYS show the success screen after a successful signup.
+        // This is the single source of truth — regardless of whether
+        // Supabase returned a user, a session, or neither.
+        // =============================================================
+        const hasSession = !!signUpData?.session;
 
-          // Auto-switch to login mode after a short delay so the user
-          // has time to read the success screen. The success screen stays
-          // visible until the user clicks "Sign In Now".
-          setTimeout(() => {
-            setIsLogin(true);
-          }, 1500);
+        setSignupSuccess(sanitizedEmail);
 
-          return;
-        }
-
-        // Email confirmation not required → show success briefly, then go to dashboard
-        if (signUpData?.session) {
-          setSignupSuccess(sanitizedEmail);
+        if (hasSession) {
+          // Email confirmation not required → go to dashboard after delay
           setTimeout(() => {
             navigate('/dashboard', { replace: true });
-          }, 1500);
-          return;
+          }, 2500);
+        } else {
+          // Email confirmation required → switch to login mode after delay
+          // (the success screen stays visible until user clicks the button)
+          setTimeout(() => {
+            setIsLogin(true);
+          }, 2000);
         }
 
-        // Fallback: no session and no user (shouldn't happen)
-        navigate('/dashboard', { replace: true });
+        return;
       }
     } catch {
       setError(
