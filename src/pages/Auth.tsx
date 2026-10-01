@@ -169,11 +169,12 @@ export default function Auth() {
 
   // =====================================================================
   // 🔒 CLEAR ERROR ON INPUT CHANGE
+  // Note: `signupSuccess` is intentionally NOT cleared here — it should
+  // persist until the user explicitly dismisses it (clicks "Sign In Now").
   // =====================================================================
   useEffect(() => {
     if (error) setError(null);
     if (rateLimitMessage) setRateLimitMessage(null);
-    if (signupSuccess) setSignupSuccess(null);
   }, [email, password, confirmPassword, isLogin]);
 
   // =====================================================================
@@ -314,15 +315,26 @@ export default function Auth() {
           // Show success screen
           setSignupSuccess(sanitizedEmail);
 
-          // Auto-switch to login mode after a short delay
+          // Auto-switch to login mode after a short delay so the user
+          // has time to read the success screen. The success screen stays
+          // visible until the user clicks "Sign In Now".
           setTimeout(() => {
             setIsLogin(true);
-          }, 100);
+          }, 1500);
 
           return;
         }
 
-        // Email confirmation not required → go straight to dashboard
+        // Email confirmation not required → show success briefly, then go to dashboard
+        if (signUpData?.session) {
+          setSignupSuccess(sanitizedEmail);
+          setTimeout(() => {
+            navigate('/dashboard', { replace: true });
+          }, 1500);
+          return;
+        }
+
+        // Fallback: no session and no user (shouldn't happen)
         navigate('/dashboard', { replace: true });
       }
     } catch {
