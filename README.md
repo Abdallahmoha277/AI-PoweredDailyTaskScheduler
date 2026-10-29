@@ -11,7 +11,7 @@ An intelligent task organizer powered by AI — manages your time and prioritize
 [![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Supabase](https://img.shields.io/badge/Supabase-2-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
-
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_App-brightgreen?style=for-the-badge&logo=vercel&logoColor=white)](https://ai-powered-daily-task-scheduler.vercel.app/)
 </div>
 
 ---
