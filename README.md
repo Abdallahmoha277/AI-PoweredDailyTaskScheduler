@@ -14,6 +14,14 @@ An intelligent task organizer powered by AI — manages your time and prioritize
 [![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_App-brightgreen?style=for-the-badge&logo=vercel&logoColor=white)](https://ai-powered-daily-task-scheduler.vercel.app/)
 </div>
 
+<div align="center">
+  <br>
+  <a href="https://ai-powered-daily-task-scheduler.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/🚀_Click_Here_to_Try_the_Live_Demo-2ea44f?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+  </a>
+  <br>
+  <br>
+</div>
 ---
 
 ## 📖 About the Project
